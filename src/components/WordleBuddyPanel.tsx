@@ -6,6 +6,7 @@ import LoadingState from "./LoadingState";
 import ErrorState from "./ErrorState";
 import ActionButtons from "./ActionButtons";
 import type { WordData } from "../types/word";
+import "../panel.css";
 
 interface WordleBuddyPanelProps {
     wordData?: WordData;
@@ -61,55 +62,61 @@ const WordleBuddyPanel: React.FC<WordleBuddyPanelProps> = ({
 
     if (isLoading) {
         return (
-            <div className="wordle-buddy-panel">
-                <LoadingState message="Fetching from Dictionary & Generating AI..." />
+            <div className="wb-panel">
+                <div className="wb-panel-content">
+                    <LoadingState message="Fetching from Dictionary & Generating AI..." />
+                </div>
             </div>
         );
     }
 
     if (error) {
         return (
-            <div className="wordle-buddy-panel">
-                <ErrorState
-                    message={error}
-                    onRetry={onRequestAIRefresh}
-                />
+            <div className="wb-panel">
+                <div className="wb-panel-content">
+                    <ErrorState
+                        message={error}
+                        onRetry={onRequestAIRefresh}
+                    />
+                </div>
             </div>
         );
     }
 
     if (!wordData) {
         return (
-            <div className="wordle-buddy-panel empty">
-                <p>Please enter or select a word.</p>
+            <div className="wb-panel">
+                <div className="wb-panel-content">
+                    <p className="wb-card-content">Please enter or select a word.</p>
+                </div>
                 <ActionButtons onClose={onClose} onSettings={onOpenSettings} />
             </div>
         );
     }
 
     return (
-        <div className="wordle-buddy-panel">
-            <div className="panel-drag-handle" />
+        <div className="wb-panel">
+            <div className="wb-panel-content">
+                <WordHeader
+                    word={wordData.word}
+                    phonetic={wordData.phonetic}
+                    partOfSpeech={wordData.partOfSpeech}
+                    audioUrl={wordData.audioUrl}
+                />
 
-            <WordHeader
-                word={wordData.word}
-                phonetic={wordData.phonetic}
-                partOfSpeech={wordData.partOfSpeech}
-                audioUrl={wordData.audioUrl}
-            />
+                <DefinitionSection
+                    title="AI Simplified Definition"
+                    content={wordData.simplifiedDefinition}
+                />
 
-            <DefinitionSection
-                title="AI Simplified Definition"
-                content={wordData.simplifiedDefinition}
-            />
+                <DefinitionSection
+                    title="Original Dictionary Definition"
+                    content={wordData.originalDefinition}
+                    isCollapsible
+                />
 
-            <DefinitionSection
-                title="Original Dictionary Definition"
-                content={wordData.originalDefinition}
-                isCollapsible
-            />
-
-            <ExamplesSection examples={wordData.examples} />
+                <ExamplesSection examples={wordData.examples} />
+            </div>
 
             <ActionButtons
                 isFavorited={isFavorited}
