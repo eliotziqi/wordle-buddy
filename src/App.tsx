@@ -1,13 +1,14 @@
 import React from "react";
 import "./App.css";
 import WordleBuddyPanel from "./components/WordleBuddyPanel";
+import DraggableWrapper from "./components/DraggableWrapper";
 import type { WordData } from "./types/word";
 
 const mockWordData: WordData = {
   word: "crate",
   phonetic: "/kreɪt/",
   partOfSpeech: "noun",
-  audioUrl: "https://api.dictionaryapi.dev/media/pronunciations/en/crate-us.mp3", // Added mock audio
+  audioUrl: "https://api.dictionaryapi.dev/media/pronunciations/en/crate-us.mp3",
   simplifiedDefinition: "A wooden box used for storage or transport.",
   originalDefinition:
     "A rugged wooden container often used for transporting goods.",
@@ -26,23 +27,28 @@ const mockWordData: WordData = {
 function App() {
   const [darkMode, setDarkMode] = React.useState(false);
 
-  // Mock handlers
+  const handleToggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   const handleClose = () => console.log("Close clicked");
   const handleSettings = () => console.log("Settings clicked");
   const handleRefresh = () => console.log("Refresh clicked");
 
   return (
     <div className="app-root">
-      <WordleBuddyPanel
-        wordData={mockWordData}
-        isLoading={false}
-        error={undefined}
-        darkMode={darkMode}
-        onToggleDarkMode={() => setDarkMode(!darkMode)}
-        onClose={handleClose}
-        onOpenSettings={handleSettings}
-        onRequestAIRefresh={handleRefresh}
-      />
+      <DraggableWrapper>
+        <WordleBuddyPanel
+          wordData={mockWordData}
+          isLoading={false}
+          error={undefined}
+          darkMode={darkMode}
+          onToggleDarkMode={handleToggleDarkMode}
+          onClose={handleClose}
+          onOpenSettings={handleSettings}
+          onRequestAIRefresh={handleRefresh}
+        />
+      </DraggableWrapper>
     </div>
   );
 }

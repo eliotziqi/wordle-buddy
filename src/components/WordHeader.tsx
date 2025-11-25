@@ -29,7 +29,9 @@ const WordHeader: React.FC<WordHeaderProps> = ({
             <div className="wb-header-main">
                 <div className="wb-title-row">
                     <h1 className="wb-word">{word}</h1>
-                    {phonetic && <span className="wb-phonetic">{phonetic}</span>}
+                    {partOfSpeech && (
+                        <span className="wb-pos">{partOfSpeech}</span>
+                    )}                    {phonetic && <span className="wb-phonetic">{phonetic}</span>}
                     {audioUrl && (
                         <button className="wb-audio-btn" onClick={handlePlayAudio} aria-label="Play pronunciation">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -39,9 +41,7 @@ const WordHeader: React.FC<WordHeaderProps> = ({
                         </button>
                     )}
                 </div>
-                {partOfSpeech && (
-                    <span className="wb-pos">{partOfSpeech}</span>
-                )}
+
             </div>
 
             <div className="wb-header-right">

@@ -66,11 +66,9 @@ const WordleBuddyPanel: React.FC<WordleBuddyPanelProps> = ({
 
     if (isLoading) {
         return (
-            <div className="wb-floating-wrapper">
-                <div className={`wb-panel ${darkMode ? "wb-panel--dark" : ""}`}>
-                    <div className="wb-panel-content">
-                        <LoadingState message="Fetching from Dictionary & Generating AI..." />
-                    </div>
+            <div className={`wb-panel ${darkMode ? "wb-panel--dark" : ""}`}>
+                <div className="wb-panel-content">
+                    <LoadingState message="Fetching from Dictionary & Generating AI..." />
                 </div>
             </div>
         );
@@ -78,14 +76,12 @@ const WordleBuddyPanel: React.FC<WordleBuddyPanelProps> = ({
 
     if (error) {
         return (
-            <div className="wb-floating-wrapper">
-                <div className={`wb-panel ${darkMode ? "wb-panel--dark" : ""}`}>
-                    <div className="wb-panel-content">
-                        <ErrorState
-                            message={error}
-                            onRetry={onRequestAIRefresh}
-                        />
-                    </div>
+            <div className={`wb-panel ${darkMode ? "wb-panel--dark" : ""}`}>
+                <div className="wb-panel-content">
+                    <ErrorState
+                        message={error}
+                        onRetry={onRequestAIRefresh}
+                    />
                 </div>
             </div>
         );
@@ -93,53 +89,49 @@ const WordleBuddyPanel: React.FC<WordleBuddyPanelProps> = ({
 
     if (!wordData) {
         return (
-            <div className="wb-floating-wrapper">
-                <div className={`wb-panel ${darkMode ? "wb-panel--dark" : ""}`}>
-                    <div className="wb-panel-content">
-                        <p className="wb-card-content">Please enter or select a word.</p>
-                    </div>
-                    <ActionButtons onClose={onClose} onSettings={onOpenSettings} />
+            <div className={`wb-panel ${darkMode ? "wb-panel--dark" : ""}`}>
+                <div className="wb-panel-content">
+                    <p className="wb-card-content">Please enter or select a word.</p>
                 </div>
+                <ActionButtons onClose={onClose} onSettings={onOpenSettings} />
             </div>
         );
     }
 
     return (
-        <div className="wb-floating-wrapper">
-            <div className={`wb-panel ${darkMode ? "wb-panel--dark" : ""}`}>
-                <div className="wb-panel-content">
-                    <WordHeader
-                        word={wordData.word}
-                        phonetic={wordData.phonetic}
-                        partOfSpeech={wordData.partOfSpeech}
-                        audioUrl={wordData.audioUrl}
-                        darkMode={darkMode}
-                        onToggleDarkMode={onToggleDarkMode}
-                    />
-
-                    <DefinitionSection
-                        title="AI Simplified Definition"
-                        content={wordData.simplifiedDefinition}
-                    />
-
-                    <DefinitionSection
-                        title="Original Dictionary Definition"
-                        content={wordData.originalDefinition}
-                        isCollapsible
-                    />
-
-                    <ExamplesSection examples={wordData.examples} />
-                </div>
-
-                <ActionButtons
-                    isFavorited={isFavorited}
-                    isLoading={isLoading}
-                    onToggleFavorite={handleToggleFavorite}
-                    onRefreshAI={onRequestAIRefresh}
-                    onSettings={onOpenSettings}
-                    onClose={onClose}
+        <div className={`wb-panel ${darkMode ? "wb-panel--dark" : ""}`}>
+            <div className="wb-panel-content">
+                <WordHeader
+                    word={wordData.word}
+                    phonetic={wordData.phonetic}
+                    partOfSpeech={wordData.partOfSpeech}
+                    audioUrl={wordData.audioUrl}
+                    darkMode={darkMode}
+                    onToggleDarkMode={onToggleDarkMode}
                 />
+
+                <DefinitionSection
+                    title="AI Simplified Definition"
+                    content={wordData.simplifiedDefinition}
+                />
+
+                <DefinitionSection
+                    title="Original Dictionary Definition"
+                    content={wordData.originalDefinition}
+                    isCollapsible
+                />
+
+                <ExamplesSection examples={wordData.examples} />
             </div>
+
+            <ActionButtons
+                isFavorited={isFavorited}
+                isLoading={isLoading}
+                onToggleFavorite={handleToggleFavorite}
+                onRefreshAI={onRequestAIRefresh}
+                onSettings={onOpenSettings}
+                onClose={onClose}
+            />
         </div>
     );
 };
