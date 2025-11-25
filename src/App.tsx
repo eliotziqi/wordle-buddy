@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import WordleBuddyPanel from "./components/WordleBuddyPanel";
+import type { WordData } from "./types/word";
+
+const mockWordData: WordData = {
+  word: "crate",
+  phonetic: "/kreɪt/",
+  partOfSpeech: "noun",
+  simplifiedDefinition: "A wooden box used for storage or transport.",
+  originalDefinition:
+    "A rugged wooden container often used for transporting goods.",
+  examples: [
+    {
+      english: "The workers loaded the heavy crate onto the truck.",
+      translation: "工人们把沉重的木箱装上了卡车。"
+    },
+    {
+      english: "He used a crate to store his old records.",
+      translation: "他用一个木箱来存放旧唱片。"
+    }
+  ]
+};
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-root">
+      <WordleBuddyPanel
+        wordData={mockWordData}
+        isLoading={false}
+        error={undefined}
+      />
+    </div>
+  );
 }
 
-export default App
+export default App;
