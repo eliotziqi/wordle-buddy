@@ -1,17 +1,22 @@
 import React from "react";
+import { Sun, Moon } from "lucide-react";
 
 interface WordHeaderProps {
     word: string;
     phonetic?: string;
     partOfSpeech?: string;
     audioUrl?: string;
+    darkMode?: boolean;
+    onToggleDarkMode?: () => void;
 }
 
 const WordHeader: React.FC<WordHeaderProps> = ({
     word,
     phonetic,
     partOfSpeech,
-    audioUrl
+    audioUrl,
+    darkMode,
+    onToggleDarkMode
 }) => {
     const handlePlayAudio = () => {
         if (!audioUrl) return;
@@ -36,6 +41,22 @@ const WordHeader: React.FC<WordHeaderProps> = ({
                 </div>
                 {partOfSpeech && (
                     <span className="wb-pos">{partOfSpeech}</span>
+                )}
+            </div>
+
+            <div className="wb-header-right">
+                {onToggleDarkMode && (
+                    <button
+                        className="wb-dark-toggle"
+                        onClick={onToggleDarkMode}
+                        aria-label="Toggle dark mode"
+                    >
+                        {darkMode ? (
+                            <Sun className="wb-icon wb-sun" size={22} />
+                        ) : (
+                            <Moon className="wb-icon wb-moon" size={22} />
+                        )}
+                    </button>
                 )}
             </div>
         </div>

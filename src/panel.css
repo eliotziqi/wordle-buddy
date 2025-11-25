@@ -25,6 +25,14 @@
     /* stone-800 */
 }
 
+/* Floating Wrapper */
+.wb-floating-wrapper {
+    position: fixed;
+    right: 32px;
+    bottom: 32px;
+    z-index: 9999;
+}
+
 /* Base Panel */
 .wb-panel {
     width: 380px;
@@ -48,13 +56,83 @@
     /* 20px */
 }
 
-/* Dark Mode Support (via media query or .dark class) */
+/* Dark Mode Support (via media query or .wb-panel--dark class) */
 @media (prefers-color-scheme: dark) {
     .wb-panel {
         background-color: var(--wb-bg-dark);
         border-color: var(--wb-border-dark);
         color: var(--wb-text-dark);
     }
+}
+
+.wb-panel--dark {
+    background-color: var(--wb-bg-dark);
+    border-color: var(--wb-border-dark);
+    color: var(--wb-text-dark);
+}
+
+.wb-panel--dark .wb-phonetic,
+.wb-panel--dark .wb-pos,
+.wb-panel--dark .wb-audio-btn {
+    color: var(--wb-text-muted-dark);
+}
+
+.wb-panel--dark .wb-audio-btn:hover {
+    background-color: var(--wb-hover-dark);
+    color: var(--wb-text-dark);
+}
+
+.wb-panel--dark .wb-card {
+    background-color: var(--wb-card-bg-dark);
+    border-color: rgba(68, 64, 60, 0.5);
+}
+
+.wb-panel--dark .wb-card-title {
+    color: var(--wb-text-dark);
+}
+
+.wb-panel--dark .wb-card-content {
+    color: #d6d3d1;
+}
+
+.wb-panel--dark .wb-collapsible-btn {
+    background-color: rgba(41, 37, 36, 0.5);
+    color: var(--wb-text-muted-dark);
+}
+
+.wb-panel--dark .wb-collapsible-btn:hover {
+    background-color: var(--wb-hover-dark);
+}
+
+.wb-panel--dark .wb-collapsible-content {
+    color: var(--wb-text-muted-dark);
+    border-color: #44403c;
+}
+
+.wb-panel--dark .wb-examples-title {
+    color: var(--wb-text-muted-dark);
+}
+
+.wb-panel--dark .wb-example-en {
+    color: var(--wb-text-dark);
+}
+
+.wb-panel--dark .wb-example-cn {
+    color: var(--wb-text-muted-dark);
+}
+
+.wb-panel--dark .wb-actions {
+    background-color: #222;
+    border-top-color: #292524;
+}
+
+.wb-panel--dark .wb-btn {
+    color: #d6d3d1;
+}
+
+.wb-panel--dark .wb-btn:hover {
+    background-color: var(--wb-hover-dark);
+    color: white;
 }
 
 /* Header Section */
@@ -116,6 +194,31 @@
 .wb-audio-btn:hover {
     background-color: var(--wb-hover-light);
     color: var(--wb-text-light);
+}
+
+/* Header Right Section for Dark Mode Toggle */
+.wb-header-right {
+    display: flex;
+    align-items: center;
+}
+
+.wb-dark-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.375rem;
+    border-radius: 9999px;
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: background-color 0.2s;
+}
+
+.wb-dark-toggle:hover {
+    background-color: var(--wb-hover-light);
+}
+
+.wb-panel--dark .wb-dark-toggle:hover {
+    background-color: var(--wb-hover-dark);
 }
 
 /* Definition Cards */
@@ -258,74 +361,17 @@
     /* red-600 */
 }
 
-/* Dark Mode Overrides */
-@media (prefers-color-scheme: dark) {
+/* Spin Animation */
+.spin {
+    animation: spin 1s linear infinite;
+}
 
-    .wb-phonetic,
-    .wb-pos,
-    .wb-audio-btn {
-        color: var(--wb-text-muted-dark);
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
     }
 
-    .wb-audio-btn:hover {
-        background-color: var(--wb-hover-dark);
-        color: var(--wb-text-dark);
-    }
-
-    .wb-card {
-        background-color: var(--wb-card-bg-dark);
-        border-color: rgba(68, 64, 60, 0.5);
-        /* stone-700/50 */
-    }
-
-    .wb-card-title {
-        color: var(--wb-text-dark);
-    }
-
-    .wb-card-content {
-        color: #d6d3d1;
-        /* stone-300 */
-    }
-
-    .wb-collapsible-btn {
-        background-color: rgba(41, 37, 36, 0.5);
-        /* stone-800/50 */
-        color: var(--wb-text-muted-dark);
-    }
-
-    .wb-collapsible-btn:hover {
-        background-color: var(--wb-hover-dark);
-    }
-
-    .wb-collapsible-content {
-        color: var(--wb-text-muted-dark);
-        border-color: #44403c;
-    }
-
-    .wb-examples-title {
-        color: var(--wb-text-muted-dark);
-    }
-
-    .wb-example-en {
-        color: var(--wb-text-dark);
-    }
-
-    .wb-example-cn {
-        color: var(--wb-text-muted-dark);
-    }
-
-    .wb-actions {
-        background-color: #222;
-        border-top-color: #292524;
-    }
-
-    .wb-btn {
-        color: #d6d3d1;
-        /* stone-300 */
-    }
-
-    .wb-btn:hover {
-        background-color: var(--wb-hover-dark);
-        color: white;
+    to {
+        transform: rotate(360deg);
     }
 }
