@@ -3,12 +3,14 @@ import "./App.css";
 import WordleBuddyPanel from "./components/WordleBuddyPanel";
 import DraggableWrapper from "./components/DraggableWrapper";
 import { fetchWordDefinition } from "./services/dictionaryService";
+import { enhanceWordData } from "./services/aiService";
 import type { WordData } from "./types/word";
 
 function App() {
   const [darkMode, setDarkMode] = React.useState(false);
   const [wordData, setWordData] = React.useState<WordData | undefined>(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isAILoading, setIsAILoading] = React.useState(false);
   const [error, setError] = React.useState<string | undefined>(undefined);
   const [currentWord, setCurrentWord] = React.useState("");
 
@@ -27,9 +29,22 @@ function App() {
     setCurrentWord(word);
 
     try {
-      const data = await fetchWordDefinition(word);
-      setWordData(data);
+      // Step 1: Fetch from dictionary API
+      const dictData = await fetchWordDefinition(word);
+      setWordData(dictData);
       setError(undefined);
+
+      // Step 2: Enhance with AI (non-blocking)
+      setIsAILoading(true);
+      try {
+        const enhancedData = await enhanceWordData(dictData);
+        setWordData(enhancedData);
+      } catch (aiError) {
+        console.error("AI enhancement failed:", aiError);
+        // Don't show error to user, just keep dictionary data
+      } finally {
+        setIsAILoading(false);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to fetch word");
       setWordData(undefined);
@@ -38,9 +53,25 @@ function App() {
     }
   };
 
-  const handleRefresh = () => {
-    if (currentWord) {
-      handleFetchWord(currentWord);
+  const handleRefreshAI = async () => {
+    if (!wordData) return;
+
+    setIsAILoading(true);
+    try {
+      // Force regenerate - bypass any caching
+      const enhancedData = await enhanceWordData(wordData, true);
+      setWordData(enhancedData);
+
+      if (enhancedData.aiEnhanced === "failed") {
+        setError("AI enhancement failed. Please check your API key in settings.");
+      } else {
+        setError(undefined);
+      }
+    } catch (aiError) {
+      console.error("AI refresh failed:", aiError);
+      setError("AI enhancement failed. Please check your API key in settings.");
+    } finally {
+      setIsAILoading(false);
     }
   };
 
@@ -107,13 +138,13 @@ function App() {
       <DraggableWrapper>
         <WordleBuddyPanel
           wordData={wordData}
-          isLoading={isLoading}
+          isLoading={isLoading || isAILoading}
           error={error}
           darkMode={darkMode}
           onToggleDarkMode={handleToggleDarkMode}
           onClose={handleClose}
           onOpenSettings={handleSettings}
-          onRequestAIRefresh={handleRefresh}
+          onRequestAIRefresh={handleRefreshAI}
         />
       </DraggableWrapper>
     </div>

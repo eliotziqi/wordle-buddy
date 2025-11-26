@@ -121,7 +121,7 @@ const WordleBuddyPanel: React.FC<WordleBuddyPanelProps> = ({
                     isCollapsible
                 />
 
-                <ExamplesSection examples={wordData.examples} />
+                <ExamplesSection wordData={wordData} onRefreshAI={onRequestAIRefresh} />
             </div>
 
             <ActionButtons

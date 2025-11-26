@@ -10,11 +10,11 @@
 - [x] **Fallback Mechanism**:
     - [x] Handle API failures gracefully.
 
-## 2. AI Features (LLM Integration) 🚧
-- [ ] **Simplified Definition**:
-    - [ ] Prompt LLM to simplify complex dictionary definitions.
-- [ ] **Example Generation**:
-    - [ ] Generate 1-2 simple sentences (B1 level) based on the definition.
+## 2. AI Features (LLM Integration) ✅
+- [x] **Simplified Definition**:
+    - [x] Prompt LLM to simplify complex dictionary definitions.
+- [x] **Example Generation**:
+    - [x] Generate 1-2 simple sentences (B1 level) based on the definition.
 - [ ] **Multi-language Support**:
     - [ ] Translate definitions/examples to user's target language (CN/JP/etc.).
 
